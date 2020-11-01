@@ -1,14 +1,5 @@
-// var mysql = require('mysql');
-
-// var con = mysql.createPool({
-//   host: "localhost",
-//   user: "root",
-//   password: "rootroot"
-// });
-
-// module.exports = con;
-
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 const uri = 'mongodb+srv://root:rootroot@yelp.sbp6n.mongodb.net/yelp?retryWrites=true&w=majority'
 
 mongoose.connect(uri, {
@@ -17,6 +8,9 @@ mongoose.connect(uri, {
 })
 .then(()=>{
   console.log("Mongo connected")
+})
+.catch(err=>{
+  console.log("Mongo not connected "+err)
 })
 
 module.exports = mongoose

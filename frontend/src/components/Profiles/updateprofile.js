@@ -12,8 +12,7 @@ var redirectVar = null;;
 class updateprofile extends Component {
   state = {updateSuccess:false}
   componentDidMount(){    
-    this.props.fetchUserData(window.localStorage.getItem('id'));
-    
+    this.props.fetchUserData(window.localStorage.getItem('id'));    
   }
 
   renderInput({input, label, type, placeholder, meta:{touched, error}}){
