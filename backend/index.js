@@ -70,7 +70,7 @@ app.get("/getEvents", get_data_controllers.getEvents)
 app.get("/getRestEvents/:rest_id", get_data_controllers.getRestEvents)
 app.get("/getRegisteredEvents/:id", get_data_controllers.getRegisteredEvents);
 app.get("/getData/:id", get_data_controllers.getUserData);
-app.get("/getRestData/:rest_id", get_data_controllers.getUserData)
+app.get("/getRestData/:rest_id", get_data_controllers.getRestData)
 app.get("/getDishes/:rest_id", get_data_controllers.getDishes)
 app.get("/getOrders", get_data_controllers.getOrders)
 app.get("/getCart/:user_id", get_data_controllers.getCart)

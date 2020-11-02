@@ -14,14 +14,14 @@ class RestProfile extends Component {
   componentDidMount(){        
     setTimeout(()=>{
       this.props.fetchRestData(window.localStorage.getItem('rest_id'));
-      this.props.fetchDishData(window.localStorage.getItem('rest_id'));
+      // this.props.fetchDishData(window.localStorage.getItem('rest_id'));
     },0)    
   }
 
   render() {
     let redirectVar = null;
     if(!window.localStorage.getItem('isRestSignedIn')){
-      redirectVar = <Redirect to= "/restlogin/"/>
+      redirectVar = <Redirect to="/restlogin/"/>
     }
     let dishesInfo = null;
     if(this.props.dishes.dishes.length !== undefined){

@@ -17,10 +17,10 @@ function handle_request(msg, callback){
         console.log("Email already in use")
         var b = {}
         //bcrypt logic
-        bcrypt.compare(msg.password, results.password, function (err, isMatch) {
+        bcrypt.compare(msg.password, result.password, function (err, isMatch) {
           if (isMatch && !err) {
-            b.email = results.email;
-            b.id = results._id;
+            b.email = result.email;
+            b.id = result._id;
             callback(null,{code:200,message:b})
           } else {
             callback(null,{code:403,message:"Credentials don't match"})
@@ -31,7 +31,6 @@ function handle_request(msg, callback){
             }
         })
         //bcrypt logic ends
-        callback(null, {code:403,message:"Email already in use"})
       }
       else{
         console.log("User doesn't exist")
