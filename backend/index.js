@@ -75,6 +75,7 @@ app.get("/getDishes/:rest_id", get_data_controllers.getDishes)
 app.get("/getOrders", get_data_controllers.getOrders)
 app.get("/getCart/:user_id", get_data_controllers.getCart)
 app.get('/getReviews', get_data_controllers.getReviews)
+app.get("/getRestaurants", get_data_controllers.getRestaurants)
 //more config
 app.listen(3001);
 console.log("Server Listening on port 3001");

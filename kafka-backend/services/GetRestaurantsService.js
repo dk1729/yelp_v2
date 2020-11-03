@@ -1,12 +1,12 @@
 var {rest_details} = require('../Models/RestDetails');
 
 function handle_request(msg, callback){   
-  console.log("Inside fetch rest data kafka backend");
+  console.log("Inside fetch restaurants from user pers kafka backend");
   console.log(msg);
   
   //main logic
 
-  rest_details.findOne({_id:msg.rest_id}, {password:0, __v:0} , function(err, result){
+  rest_details.find({}, {password:0, __v:0} , function(err, result){
       console.log("I got invoked")
       console.log(result)
       if(err){
@@ -26,4 +26,4 @@ function handle_request(msg, callback){
   console.log("after callback of rest login");
 };
 
-exports.handle_request = handle_request; 
+exports.handle_request = handle_request;

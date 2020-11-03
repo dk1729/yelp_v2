@@ -11,6 +11,7 @@ var updateRestData = require('./services/UpdateRestData');
 var AddDishService = require('./services/AddDishService');
 var GetDishesService = require('./services/GetDishesService');
 var UpdateDishService = require('./services/UpdateDishService');
+var GetRestaurantsService = require('./services/GetRestaurantsService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -53,3 +54,4 @@ handleTopicRequest("update_rest_data", updateRestData);
 handleTopicRequest("add_dish", AddDishService);
 handleTopicRequest("get_dishes", GetDishesService);
 handleTopicRequest("update_dish", UpdateDishService);
+handleTopicRequest("get_restaurants", GetRestaurantsService);
