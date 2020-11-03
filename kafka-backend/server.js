@@ -8,6 +8,9 @@ var RestSignup = require('./services/RestSignup')
 var RestLoginService = require('./services/RestLoginService');
 var GetRestData = require('./services/GetRestData');
 var updateRestData = require('./services/UpdateRestData');
+var AddDishService = require('./services/AddDishService');
+var GetDishesService = require('./services/GetDishesService');
+var UpdateDishService = require('./services/UpdateDishService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -47,3 +50,6 @@ handleTopicRequest("rest_signup", RestSignup);
 handleTopicRequest("rest_login", RestLoginService);
 handleTopicRequest("get_rest_data", GetRestData);
 handleTopicRequest("update_rest_data", updateRestData);
+handleTopicRequest("add_dish", AddDishService);
+handleTopicRequest("get_dishes", GetDishesService);
+handleTopicRequest("update_dish", UpdateDishService);

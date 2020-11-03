@@ -14,7 +14,7 @@ class RestProfile extends Component {
   componentDidMount(){        
     setTimeout(()=>{
       this.props.fetchRestData(window.localStorage.getItem('rest_id'));
-      // this.props.fetchDishData(window.localStorage.getItem('rest_id'));
+      this.props.fetchDishData(window.localStorage.getItem('rest_id'));
     },0)    
   }
 
@@ -23,9 +23,11 @@ class RestProfile extends Component {
     if(!window.localStorage.getItem('isRestSignedIn')){
       redirectVar = <Redirect to="/restlogin/"/>
     }
+    console.log(this.props.dishes.dishes)
     let dishesInfo = null;
     if(this.props.dishes.dishes.length !== undefined){
-      dishesInfo = this.props.dishes.dishes.map(dish => {
+      console.log("Will try")
+      dishesInfo = this.props.dishes.dishes.map(dish => {        
         return (
           <Card bg="white" className="shadow p-3 mb-5 rounded" style={{color:"black", width:"600px",marginLeft:20, marginTop:15, height:"200px"}}>
               <Card.Body>
@@ -38,13 +40,17 @@ class RestProfile extends Component {
                     <Row><Col>$$: {dish.dish_price}</Col></Row>
                     <Row><Col>Ingredients: {dish.ingredients}</Col></Row>
                     <Row><Col>Eat it for: {dish.dish_type}</Col></Row>
-                    <Link to={{pathname:'/updateDish', state:{ingredients:dish.ingredients, dish_type:dish.dish_type, dish_id:dish.dish_id,dish_name:dish.dish_name, description:dish.description, dish_price:dish.dish_price} }}>Edit</Link>
+                    <Link to={{pathname:'/updateDish', state:{ingredients:dish.ingredients, dish_type:dish.dish_type, dish_id:dish._id,dish_name:dish.dish_name, description:dish.description, dish_price:dish.dish_price} }}>Edit</Link>
                   </Card.Text>
                 </div>
               </Card.Body>
             </Card>
         )        
       })
+    }
+    else{
+      console.log("Hola")
+      console.log(this.props.dishes.dishes.length)
     }
     return (
       <div>

@@ -67,7 +67,7 @@ class AddDish extends Component {
                 <Field label = "Dish Price" name="dish_price" component={this.renderInput} type="text" ></Field>
                 <Field label = "Description" name="description" component={this.renderInput} type="text" ></Field>
                 <Field label = "Dish Type" name="dish_type" component={this.renderInput} type="text" ></Field>
-                <button className="ui button primary">Submit</button>
+                <button className="ui button primary" style={{background:"#d32323"}}>Submit</button>
               </form>
             </div>
           </Col>

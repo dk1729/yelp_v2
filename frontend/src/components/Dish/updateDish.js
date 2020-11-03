@@ -42,7 +42,7 @@ class updateDish extends Component {
             <Field label = "Description" name="description" component={this.renderInput} type="text" placeholder={this.props.location.state.description}></Field>
             <Field label = "Dish Type" name="dish_type" component={this.renderInput} type="text" placeholder={this.props.location.state.dish_type}></Field>
             {/* <Field label = "Dish Images" component={this.renderInput} type="file" ></Field> */}
-            <button className="ui button primary">Submit</button>
+            <button className="ui button primary" style={{background:"#d32323"}}>Submit</button>
           </form>
         </div>        
       </div>

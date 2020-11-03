@@ -122,7 +122,7 @@ class updateRestProfile extends Component {
                 <Field placeholder={this.props.restDetails.delivery} name="delivery" component={this.renderInput} label="delivery" type="text"/>
                 <Field placeholder={this.props.restDetails.dineout} name="dineout" component={this.renderInput} label="dineout" type="text"/>                                
                 <Field placeholder={this.props.restDetails.description} name="description" component={this.renderInput} label="Description" type="text"/>
-                <button className="ui button primary">Submit</button>
+                <button className="ui button primary" style={{background:"#d32323"}}>Submit</button>
               </form>
               </Col>          
           </Row>
