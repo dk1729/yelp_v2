@@ -6,7 +6,7 @@ function handle_request(msg, callback){
   
   //main logic
 
-  updates = {}
+  var updates = {}
   for (var key in msg) {
     if (msg.hasOwnProperty(key)) {
       console.log(key + " -> " + msg[key]);

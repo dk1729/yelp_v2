@@ -1,64 +1,84 @@
 var con = require('./config')
 var mysql = require('mysql');
+var kafka = require('../kafka/client');
 
 exports.placeOrder = (req,res) => {
   console.log("Received order on backend")
   console.log("Orders "+JSON.stringify(req.body))
-  let t1_data = {
-    "rest_id":req.body.orders[0].rest_id,
-    "status":"Placed",
-    "mode":req.body.mode,
-    "total":req.body.total,
-    "user_id":req.body.orders[0].user_id
-  };
-  let q1 = "INSERT INTO `yelp`.`order_register` SET "+mysql.escape(t1_data);
-  
-  const q1_exec = async () => {
-    return await con.query(q1)
-  }
 
-  con.query(q1, (err,results) => {
-    if(err){
-      res.status(400,{
-        'Content-Type' : 'text/value'
-      });
-      res.end("Error occured")
-    }      
-    console.log("Results : "+JSON.stringify(results))
-    req.body.orders.map(order => {
-      let t2_data = {
-        "order_id":results.insertId,
-        "dish_id":order.dish_id,
-        "quantity":order.quantity
-      };
-      let q2 = "INSERT INTO `yelp`.`order_details` SET "+mysql.escape(t2_data);
-      con.query(q2, (err1,t_results) => {
-        if(err1){
-          res.status(400,{
-            'Content-Type' : 'text/value'
-          });
-          res.end("Error occured")
-        }          
-        console.log("Yeah, I inserted them")
+  kafka.make_request('place_order',req.body, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
       })
-    })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
+      });
+      res.end(results.message);
+    }
+  });
+  // let t1_data = {
+  //   "rest_id":req.body.orders[0].rest_id,
+  //   "status":"Placed",
+  //   "mode":req.body.mode,
+  //   "total":req.body.total,
+  //   "user_id":req.body.orders[0].user_id
+  // };
+  // let q1 = "INSERT INTO `yelp`.`order_register` SET "+mysql.escape(t1_data);
+  
+  // const q1_exec = async () => {
+  //   return await con.query(q1)
+  // }
 
-    let q3 = "TRUNCATE `yelp`.`cart`;"
-    con.query(q3, (err2, del_result) => {
-      if(err2){
-        res.status(400,{
-          'Content-Type' : 'text/value'
-        });
-        res.end("Error occured")
-      }
-      console.log("Deleted cart")
-    })
+  // con.query(q1, (err,results) => {
+  //   if(err){
+  //     res.status(400,{
+  //       'Content-Type' : 'text/value'
+  //     });
+  //     res.end("Error occured")
+  //   }      
+  //   console.log("Results : "+JSON.stringify(results))
+  //   req.body.orders.map(order => {
+  //     let t2_data = {
+  //       "order_id":results.insertId,
+  //       "dish_id":order.dish_id,
+  //       "quantity":order.quantity
+  //     };
+  //     let q2 = "INSERT INTO `yelp`.`order_details` SET "+mysql.escape(t2_data);
+  //     con.query(q2, (err1,t_results) => {
+  //       if(err1){
+  //         res.status(400,{
+  //           'Content-Type' : 'text/value'
+  //         });
+  //         res.end("Error occured")
+  //       }          
+  //       console.log("Yeah, I inserted them")
+  //     })
+  //   })
+
+  //   let q3 = "TRUNCATE `yelp`.`cart`;"
+  //   con.query(q3, (err2, del_result) => {
+  //     if(err2){
+  //       res.status(400,{
+  //         'Content-Type' : 'text/value'
+  //       });
+  //       res.end("Error occured")
+  //     }
+  //     console.log("Deleted cart")
+  //   })
     
-    res.status(200,{
-      'Content-Type' : 'application/json'
-    });
-    res.end("Order placed")
-  })
+  //   res.status(200,{
+  //     'Content-Type' : 'application/json'
+  //   });
+  //   res.end("Order placed")
+  // })
 };
 
 exports.deleteCart = (req,res) => {
@@ -84,22 +104,42 @@ exports.deleteCart = (req,res) => {
 exports.addToCart = (req,res) => {
   
   console.log("Trying to add")
-  let q1 = "INSERT INTO `yelp`.`cart` SET"+mysql.escape(req.body);
 
-  con.query(q1, function (err2, results) {      
-    if(err2){
-      console.log("Error occured, fucker: "+err2)
-      res.status(400,{
-        'Content-Type' : 'text/value'
+  kafka.make_request('add_to_cart',req.body, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
+      })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
       });
-      res.end("Error occured")
+      res.end(results.message);
     }
-    console.log("Done adding")
-    res.status(200,{
-      'Content-Type' : 'text/plain'
-    });
-    res.end("Added to cart")
-  })
+  });
+
+  // let q1 = "INSERT INTO `yelp`.`cart` SET"+mysql.escape(req.body);
+
+  // con.query(q1, function (err2, results) {      
+  //   if(err2){
+  //     console.log("Error occured, fucker: "+err2)
+  //     res.status(400,{
+  //       'Content-Type' : 'text/value'
+  //     });
+  //     res.end("Error occured")
+  //   }
+  //   console.log("Done adding")
+  //   res.status(200,{
+  //     'Content-Type' : 'text/plain'
+  //   });
+  //   res.end("Added to cart")
+  // })
   
 };
 

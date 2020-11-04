@@ -20,13 +20,13 @@ var rest_details = mongoose.model('rest_details', {
     type:String
   },
   delivery:{
-    type:String
+    type:Boolean
   },
   takeout:{
-    type:String
+    type:Boolean
   },
   dineout:{
-    type:String
+    type:Boolean
   },
   description:{
     type:String

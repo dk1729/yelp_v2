@@ -109,7 +109,7 @@ export function fetchRestData(rest_id) {
   }
 }
 
-export function fetchDishData(rest_id) {  
+export function fetchDishData(rest_id) {
   return async (dispatch)=>{
     Axios.defaults.withCredentials = true;
     const response = await Axios.get(`${baseURL}/getDishes/`+rest_id)

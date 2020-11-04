@@ -95,14 +95,19 @@ class restaurants extends Component {
     let hoodInfo = [];
     let markerInfo = [];
 
+    
+    for(var i in this.props.restaurants.restaurants){
+      let restaurant = this.props.restaurants.restaurants[i]
+      if(!hoodInfo.includes(restaurant.hood)){
+        hoodInfo.push(restaurant.hood)
+      }
+    }      
+    
     if(this.state.nosuch){
      restInfo = <div>No such restaurants</div> 
     }
     else if(this.state.updatedData.length>0){
       restInfo = this.state.updatedData.map(restaurant => {
-        if(!hoodInfo.includes(restaurant.hood)){
-          hoodInfo.push(restaurant.hood)
-        }
         markerInfo.push({rest_name:restaurant.rest_name, latitude:restaurant.latitude, longitude:restaurant.longitude})
         return(
           <Link to={{pathname:"/biz", state:{restaurant}}} style={{textDecoration:"none"}}>
@@ -125,9 +130,6 @@ class restaurants extends Component {
     }
     else if(this.props.restaurants.restaurants.length!==undefined){
       restInfo = this.props.restaurants.restaurants.map(restaurant => {
-        if(!hoodInfo.includes(restaurant.hood)){
-          hoodInfo.push(restaurant.hood)
-        }
         markerInfo.push({rest_name:restaurant.rest_name, latitude:restaurant.latitude, longitude:restaurant.longitude})
         return (
           <Link to={{pathname:"/biz", state:{restaurant}}} style={{textDecoration:"none"}}>

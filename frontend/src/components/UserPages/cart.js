@@ -78,14 +78,15 @@ class cart extends Component {
     let dishInfo = null;        
     let takeout = null;
     let delivery = null;
-    let total = 0;    
-    if(this.props.cart.cart.length !== undefined){      
+    let total = 0;
+    console.log(this.props.cart)
+    if(Object.keys(this.props.cart.cart).length){
 
-      if(this.props.cart.cart[0].takeout === "true"){
+      if(this.props.cart.cart[0].takeout === true){
         takeout = <Col><Field type="radio" value="takeout" label="Takeout" name="mode" component={this.renderInput}/></Col>
       }      
 
-      if(this.props.cart.cart[0].delivery === "true"){
+      if(this.props.cart.cart[0].delivery === true){
         delivery = <Col><Field type="radio" value="delivery" name="mode" label="Delivery" component={this.renderInput}/></Col>        
       }      
 
@@ -102,7 +103,7 @@ class cart extends Component {
                 <Row><Col>Offered by: {dish.rest_name}</Col></Row>
                 <Row><Col>$$: {dish.dish_price}</Col></Row>
                 <Row><Col>Quantity: {dish.quantity}</Col></Row>
-                <Row><Col><Button style={{marginTop:10}} onClick={()=>this.handleClick(dish.cart_id)}>Remove from Cart</Button></Col></Row>
+                <Row><Col><Button style={{marginTop:10, background:"#d32323", color:"white"}} onClick={()=>this.handleClick(dish.cart_id)}>Remove from Cart</Button></Col></Row>
               </Card.Text>
             </div>
             </Card.Body>

@@ -12,6 +12,11 @@ var AddDishService = require('./services/AddDishService');
 var GetDishesService = require('./services/GetDishesService');
 var UpdateDishService = require('./services/UpdateDishService');
 var GetRestaurantsService = require('./services/GetRestaurantsService');
+var FilterService = require('./services/FilterService');
+var AddToCartService = require('./services/AddToCartService')
+var GetCartService = require('./services/GetCartService')
+var PlaceOrderService = require('./services/PlaceOrderService');
+var GetOrdersService = require('./services/GetOrdersService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -55,3 +60,8 @@ handleTopicRequest("add_dish", AddDishService);
 handleTopicRequest("get_dishes", GetDishesService);
 handleTopicRequest("update_dish", UpdateDishService);
 handleTopicRequest("get_restaurants", GetRestaurantsService);
+handleTopicRequest("filter", FilterService);
+handleTopicRequest("add_to_cart", AddToCartService);
+handleTopicRequest("get_cart", GetCartService);
+handleTopicRequest("place_order", PlaceOrderService);
+handleTopicRequest("get_orders", GetOrdersService);

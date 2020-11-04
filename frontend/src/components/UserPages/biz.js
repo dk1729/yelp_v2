@@ -17,7 +17,7 @@ class biz extends Component {
   state = {modalShow:false, message:"", show:false};
 
   componentDidMount(){    
-    this.props.fetchDishData(this.props.location.state.restaurant.rest_id);
+    this.props.fetchDishData(this.props.location.state.restaurant._id);
   }
 
   handleModal = event => {
@@ -27,8 +27,8 @@ class biz extends Component {
 
   handleClick = (dish_id, dish_path) => {
     console.log("Dish ID = "+dish_id)
-    console.log("Dish ID = "+dish_path)
-    console.log("Rest ID = "+this.props.location.state.restaurant.rest_id)
+    // console.log("Dish ID = "+dish_path)
+    console.log("Rest ID = "+this.props.location.state.restaurant._id)
     console.log("User ID = "+window.localStorage.getItem('id'));
     console.log("Count = "+document.getElementById(dish_id).value)
     let count = document.getElementById(dish_id).value
@@ -37,7 +37,7 @@ class biz extends Component {
       console.log("Hola")
     }
     axios.defaults.withCredentials = true;
-    axios.post(`${baseURL}/addToCart`,{dish_id, dish_path, rest_id:this.props.location.state.restaurant.rest_id, user_id:window.localStorage.getItem('id'), count})
+    axios.post(`${baseURL}/addToCart`,{dish_id, dish_path, rest_id:this.props.location.state.restaurant._id, user_id:window.localStorage.getItem('id'), count})
         .then(response => {
             console.log("Status Code : ",response.status);
             console.log(response)            
@@ -63,6 +63,8 @@ class biz extends Component {
     if(!window.localStorage.getItem('isSignedIn')){
       redirectVar = <Redirect to= "/login/"/>
     }
+    console.log("Rest data = ")
+    console.log(this.props.location.state.restaurant)
     let dishInfo = null;
     console.log("Dishes: "+JSON.stringify(this.props.dishes.dishes))
     if(this.props.dishes.dishes.length !== undefined){      
@@ -78,8 +80,8 @@ class biz extends Component {
                 <Row style={{marginTop:2}}><Col>$$: {dish.dish_price}</Col></Row>
                 <Row style={{marginTop:2}}><Col>Ingredients: {dish.ingredients}</Col></Row>
                 <Row style={{marginTop:2}}><Col>Eat it for: {dish.dish_type}</Col></Row>
-                <Row style={{marginTop:2}}><Col>Quantity: <input type="number" id={dish.dish_id}/></Col></Row>
-                <Row style={{marginTop:2}}><Col><Button style={{marginTop:20, color:"white", backgroundColor:"#d32323"}} onClick={()=>this.handleClick(dish.dish_id, dish.dish_path)}>Add To Cart</Button></Col></Row>
+                <Row style={{marginTop:2}}><Col>Quantity: <input type="number" id={dish._id}/></Col></Row>
+                <Row style={{marginTop:2}}><Col><Button style={{marginTop:20, color:"white", backgroundColor:"#d32323"}} onClick={()=>this.handleClick(dish._id, dish.dish_path)}>Add To Cart</Button></Col></Row>
               </Card.Text>
             </div>
             </Card.Body>
