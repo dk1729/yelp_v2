@@ -37,6 +37,7 @@ export default class ReviewModal extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <Modal
       {...this.props}

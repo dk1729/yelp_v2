@@ -74,7 +74,7 @@ class CreateEventModal extends Component {
           </Row>
           <Row style={{marginBottom:10}}>
             <Col>
-              <button className="ui button primary">Create An Event</button>              
+              <button className="ui button primary" style={{background:"#d32323"}}>Create An Event</button>              
             </Col>
           </Row>          
         </Form>        

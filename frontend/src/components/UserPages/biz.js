@@ -158,7 +158,7 @@ class biz extends Component {
                 </Col>
               </Row>              
               <Row><Col><Button style={{marginTop:10, marginLeft:50, color:"white", backgroundColor:"#d32323"}} onClick = {this.handleModal}>Add A Review</Button></Col></Row>
-              <ReviewModal show={this.state.modalShow} onHide={()=>this.setState({modalShow:false})} rest_id={this.props.location.state.restaurant.rest_id}/>
+              <ReviewModal show={this.state.modalShow} onHide={()=>this.setState({modalShow:false})} rest_id={this.props.location.state.restaurant._id}/>
             </Col>
             <Col>
               <h4>Call: {this.props.location.state.restaurant.phone}</h4>

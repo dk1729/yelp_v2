@@ -86,8 +86,6 @@ class OrderHistory extends Component {
           )
         })
 
-        //Delivery: Received, Preparing, Out for delivery, deivered, cancelled
-        //Takeout: Received, Preparing, Ready for pickup, picked up, cancelled
         return (
           <Card bg="white" className="shadow p-3 mb-5 rounded" style={{width:"700px",marginLeft:50, marginTop:20, height:"200px"}}>
             <Card.Body>

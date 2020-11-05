@@ -26,8 +26,7 @@ class InternalHeader extends Component {
 
   onSubmit = formValues => {
     this.props.setSearchTerms(formValues.searchTerm, formValues.searchLoc);
-    this.props.applyFilters(formValues);
-    
+    this.props.applyFilters(formValues);    
   }
 
   render() {

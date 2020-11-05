@@ -4,21 +4,39 @@ var mysql = require('mysql');
 exports.addEvent = (req,res) => {
   console.log(req.body)
 
-  let q1 = "INSERT INTO `yelp`.`event_details` SET "+mysql.escape(req.body);
-
-  con.query(q1, (err, results) => {
-    if(err){
-      res.status(400,{
-        'Content-Type' : 'text/value'
+  kafka.make_request('rest_signup',req.body, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
+      })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
       });
-      res.end("Error occured")
+      res.end(results.message);
     }
-    console.log(results)
-    res.status(200,{
-      'Content-Type' : 'application/json'
-    });
-    res.end("Event Added")
   });
+  // let q1 = "INSERT INTO `yelp`.`event_details` SET "+mysql.escape(req.body);
+
+  // con.query(q1, (err, results) => {
+  //   if(err){
+  //     res.status(400,{
+  //       'Content-Type' : 'text/value'
+  //     });
+  //     res.end("Error occured")
+  //   }
+  //   console.log(results)
+  //   res.status(200,{
+  //     'Content-Type' : 'application/json'
+  //   });
+  //   res.end("Event Added")
+  // });
 }
 
 exports.registerForEvent = (req,res) => {

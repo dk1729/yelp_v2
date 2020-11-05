@@ -17,6 +17,10 @@ var AddToCartService = require('./services/AddToCartService')
 var GetCartService = require('./services/GetCartService')
 var PlaceOrderService = require('./services/PlaceOrderService');
 var GetOrdersService = require('./services/GetOrdersService');
+var FilterOrdersServices = require('./services/FilterOrdersServices');
+var SubmitReviewService = require('./services/SubmitReviewService');
+var GetReviewsService = require('./services/GetReviewsService');
+var UpdateOrderStatusService = require('./services/UpdateOrderStatusService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -65,3 +69,7 @@ handleTopicRequest("add_to_cart", AddToCartService);
 handleTopicRequest("get_cart", GetCartService);
 handleTopicRequest("place_order", PlaceOrderService);
 handleTopicRequest("get_orders", GetOrdersService);
+handleTopicRequest("filter_orders", FilterOrdersServices);
+handleTopicRequest("submit_review", SubmitReviewService);
+handleTopicRequest("get_reviews", GetReviewsService);
+handleTopicRequest("update_order_status", UpdateOrderStatusService);

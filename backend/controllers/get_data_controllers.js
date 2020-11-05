@@ -372,61 +372,87 @@ exports.getReviews = (req, res) => {
   console.log("Getting reviews : ")
   console.log(req.query)
 
-  let q1;
-
-  if(req.query.type==="rest"){
-    q1 = "SELECT * from `yelp`.`reviews` where rest_id = "+mysql.escape(req.query.id);
-  }
-  else if(req.query.type==="user"){
-    q1 = "SELECT * from `yelp`.`reviews` where user_id = "+mysql.escape(req.query.id);
-  }
-  
-  let answer = []
-  con.query(q1, (err,results) => {
-    if(err){
-      res.status(400,{
-        'Content-Type' : 'text/value'
-      });
-      res.end("Error occured")
-    }
-
-    let sum_of_ratings = 0;
-
-    for(let i in results){
-      sum_of_ratings+=results[i].rating;
-
-      let temp = {}
-      console.log(results[i])
-      let q2;
-      if(req.query.type==="rest"){
-        q2 = "SELECT first_name, last_name from `yelp`.`user_details` where id = "+mysql.escape(results[i].user_id);
-      }
-      else if(req.query.type==="user"){
-        q2 = "SELECT rest_name from `yelp`.`rest_details` where rest_id = "+mysql.escape(results[i].rest_id);
-      }
-      console.log("QUERY = "+q2);
-      con.query(q2, (err2, results2) => {
-        console.log(results2);
-        if(req.query.type==="rest"){
-          answer.push({user_name:results2[0].first_name+" "+results2[0].last_name, ...results[i]}) 
-        }
-        else if(req.query.type==="user"){
-          answer.push({rest_name:results2[0].rest_name, ...results[i]})
-        }
-
-        if(i == results.length - 1){
-          res.status(200,{
-            'Content-Type' : 'application/json'
-          });
-          let avg = Math.round(sum_of_ratings/results.length);
-          res.end(JSON.stringify({avg, review_data:answer}))
-        }
+  kafka.make_request('get_reviews', req.query, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
       })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
+      });
+      console.log("Type = "+typeof(results.message))
+      if(typeof(results.message) === "object"){
+        console.log("Stringify")
+        res.end(JSON.stringify(results.message));
+      }
+      else{
+        console.log("No strngify")
+        res.end(results.message);
+      }      
     }
-
-    console.log("Results: "+JSON.stringify(results));
-    
   });
+  // let q1;
+
+  // if(req.query.type==="rest"){
+  //   q1 = "SELECT * from `yelp`.`reviews` where rest_id = "+mysql.escape(req.query.id);
+  // }
+  // else if(req.query.type==="user"){
+  //   q1 = "SELECT * from `yelp`.`reviews` where user_id = "+mysql.escape(req.query.id);
+  // }
+  
+  // let answer = []
+  // con.query(q1, (err,results) => {
+  //   if(err){
+  //     res.status(400,{
+  //       'Content-Type' : 'text/value'
+  //     });
+  //     res.end("Error occured")
+  //   }
+
+  //   let sum_of_ratings = 0;
+
+  //   for(let i in results){
+  //     sum_of_ratings+=results[i].rating;
+
+  //     let temp = {}
+  //     console.log(results[i])
+  //     let q2;
+  //     if(req.query.type==="rest"){
+  //       q2 = "SELECT first_name, last_name from `yelp`.`user_details` where id = "+mysql.escape(results[i].user_id);
+  //     }
+  //     else if(req.query.type==="user"){
+  //       q2 = "SELECT rest_name from `yelp`.`rest_details` where rest_id = "+mysql.escape(results[i].rest_id);
+  //     }
+  //     console.log("QUERY = "+q2);
+  //     con.query(q2, (err2, results2) => {
+  //       console.log(results2);
+  //       if(req.query.type==="rest"){
+  //         answer.push({user_name:results2[0].first_name+" "+results2[0].last_name, ...results[i]}) 
+  //       }
+  //       else if(req.query.type==="user"){
+  //         answer.push({rest_name:results2[0].rest_name, ...results[i]})
+  //       }
+
+  //       if(i == results.length - 1){
+  //         res.status(200,{
+  //           'Content-Type' : 'application/json'
+  //         });
+  //         let avg = Math.round(sum_of_ratings/results.length);
+  //         res.end(JSON.stringify({avg, review_data:answer}))
+  //       }
+  //     })
+  //   }
+
+  //   console.log("Results: "+JSON.stringify(results));
+    
+  // });
 }
 
 exports.searchEvents = (req,res) => {
