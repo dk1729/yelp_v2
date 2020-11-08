@@ -21,6 +21,12 @@ var FilterOrdersServices = require('./services/FilterOrdersServices');
 var SubmitReviewService = require('./services/SubmitReviewService');
 var GetReviewsService = require('./services/GetReviewsService');
 var UpdateOrderStatusService = require('./services/UpdateOrderStatusService');
+var AddEventService = require('./services/AddEventService');
+var GetRestEventsService = require('./services/GetRestEventsService');
+var GetEventsService = require('./services/GetEventsService');
+var RegisterForEventService = require('./services/RegisterForEventService');
+var GetRegisteredEventsService = require('./services/GetRegisteredEventsService');
+var SearchEventsService = require('./services/SearchEventsService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -73,3 +79,9 @@ handleTopicRequest("filter_orders", FilterOrdersServices);
 handleTopicRequest("submit_review", SubmitReviewService);
 handleTopicRequest("get_reviews", GetReviewsService);
 handleTopicRequest("update_order_status", UpdateOrderStatusService);
+handleTopicRequest("add_event", AddEventService);
+handleTopicRequest("get_rest_events", GetRestEventsService);
+handleTopicRequest("get_events", GetEventsService);
+handleTopicRequest("register_for_event", RegisterForEventService);
+handleTopicRequest("get_registered_events", GetRegisteredEventsService);
+handleTopicRequest("search_events", SearchEventsService);

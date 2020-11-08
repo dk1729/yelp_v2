@@ -26,6 +26,12 @@ class ShowEvents extends Component {
     this.setState({searchTerm:event.target.value})
   }
 
+  reverseList = event => {
+    if(this.props.events.events.length!==undefined){
+      this.setState({cards:this.props.events.events.reverse()})
+    }
+  }
+
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state)
@@ -39,7 +45,9 @@ class ShowEvents extends Component {
           .then(response => {
               console.log("Status Code : ",response.status);            
               console.log(response.data)
-              this.setState({cards:response.data})
+              if(response.status === 200){
+                this.setState({cards:response.data})
+              }
           }).catch((err)=>{
             console.log("ERRR : ",err)
           });
@@ -102,7 +110,7 @@ class ShowEvents extends Component {
               {event.event_location}
             </Card.Content>
             <Card.Content extra>
-                <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event.event_id)}>
+                <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event._id)}>
                   Register
                 </Button>
             </Card.Content>
@@ -131,7 +139,7 @@ class ShowEvents extends Component {
               {event.event_location}
             </Card.Content>
             <Card.Content extra>
-                <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event.event_id)}>
+                <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event._id)}>
                   Register
                 </Button>
             </Card.Content>
@@ -159,7 +167,12 @@ class ShowEvents extends Component {
                 <Button color="red" style={{marginLeft:20, marginTop:10}} onClick = {this.handleModal}>View Registered Events</Button>
                 <RegisteredEvents show={this.state.modalShow} onHide={()=>this.setState({modalShow:false})} events={this.props.registeredEvents.registeredEvents}/>
               </Col>
-            </Row>                        
+            </Row>
+            <Row>
+              <Col>
+                <Button color="red" style={{marginLeft:20, marginTop:10}} onClick = {this.reverseList}>Order By Asc/Desc</Button>
+              </Col>
+            </Row>
           </Col>
           <Col>
             <Card.Group>

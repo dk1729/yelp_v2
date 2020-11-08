@@ -18,9 +18,6 @@ var event_details = mongoose.model('event_details', {
   },
   event_date:{
     type:Date
-  },
-  registered_users:{
-    type:Array
   }
 })
 

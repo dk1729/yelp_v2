@@ -18,7 +18,7 @@ function handle_request(msg, callback){
         }
         else{
         //   console.log("Ok, I'll insert")
-          let hashedPassword = bcrypt.hashSync(msg.password,10);
+        let hashedPassword = bcrypt.hashSync(msg.password,10);
           let user = {
             'rest_name':msg.rest_name,
             'email':msg.email, 
