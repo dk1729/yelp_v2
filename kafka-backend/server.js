@@ -27,6 +27,9 @@ var GetEventsService = require('./services/GetEventsService');
 var RegisterForEventService = require('./services/RegisterForEventService');
 var GetRegisteredEventsService = require('./services/GetRegisteredEventsService');
 var SearchEventsService = require('./services/SearchEventsService');
+var AddUserPhotoService = require('./services/AddUserPhotoService');
+var AddRestPhotosService = require('./services/AddRestPhotosService');
+var AddDishImageService = require('./services/AddDishImageService');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -85,3 +88,6 @@ handleTopicRequest("get_events", GetEventsService);
 handleTopicRequest("register_for_event", RegisterForEventService);
 handleTopicRequest("get_registered_events", GetRegisteredEventsService);
 handleTopicRequest("search_events", SearchEventsService);
+handleTopicRequest("upload_user_image", AddUserPhotoService);
+handleTopicRequest("upload_rest_images", AddRestPhotosService);
+handleTopicRequest("upload_dish_image", AddDishImageService);

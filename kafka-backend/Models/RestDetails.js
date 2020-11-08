@@ -43,9 +43,19 @@ var rest_details = mongoose.model('rest_details', {
   longitude:{
     type:String
   },
-  paths:{
-    type:Array
+  path1:{
+    type:String
+  },
+  path2:{
+    type:String
+  },
+  path3:{
+    type:String
+  },
+  path4:{
+    type:String
   }
+  
 })
 
 module.exports = {rest_details};

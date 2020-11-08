@@ -41,7 +41,7 @@ class AddDish extends Component {
         .then(response => {
             console.log("Status Code : ",response.status);
             console.log(response)
-            if(response.status === 202){
+            if(response.status === 200){
               formData.append('dish_id', response.data);
               axios.defaults.withCredentials = true;
               axios.post(`${baseURL}/uploadDishImage`, formData)

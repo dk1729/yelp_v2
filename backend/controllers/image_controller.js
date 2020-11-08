@@ -3,9 +3,10 @@ var path = require('path');
 var {v4: uuidv4} = require('uuid')
 var con = require('./config')
 var mysql = require('mysql');
+var kafka = require('../kafka/client')
 
 const storage = multer.diskStorage({
-  destination:"../uploads/",
+  destination:"./uploads",
   filename:(req, file, callback)=>{
     callback(null, "PROFILE-"+Date.now()+path.extname(file.originalname))
   }
@@ -16,43 +17,32 @@ const upload = multer({
 }).single("image");
 
 exports.uploadUserImage = (req,res) => {
-  upload(req, res, err=>{
+  upload(req, res, err => {
     if(err){
       throw err;
-    }          
-    let sql = "UPDATE `yelp`.`user_details` SET `path` = "+mysql.escape(req.file.filename)+" WHERE (`id` = "+req.body.id+");"
-    
-      con.query(sql, function (err, result) {
-        if (err){
-          throw err;
-          res.status(400,{
-            'Content-Type' : 'text/value'
-          });
-          res.end("Error occured")
-        }
-        if(result.length>0){
-          console.log("UPLOADED SUCCESSFULLY")
-          res.status(202,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("UPLOADED")
-        }
-        else{
-          res.status(205,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("Some error occured")
-        }
-      });
-    
-    
-    if(!err){
-      return res.sendStatus(200).end();
     }
+    kafka.make_request('upload_user_image', {file:req.file.filename, user_id:req.body.id}, function(err,results){
+      console.log('in result');
+      console.log(JSON.stringify(results));
+      console.log("Code : ",results.code)
+      console.log("Message : ",results.message)
+      if (err){
+        console.log("Inside err");
+        res.json({
+            status:"error",
+            msg:"System Error, Try Again."
+        })
+      }else{
+        res.status(results.code,{
+          'Content-Type' : 'application/json'
+        });
+        res.end(results.message);
+      }
+    });
   })
 }
 
-const DIR = '../uploads/'
+const DIR = './uploads/'
 const storage1 = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, DIR);
@@ -79,36 +69,30 @@ exports.restImagesUpload =  (req, res, next) => {
   console.log("Over here")
   console.log(req.files)
 
-  for(let i=0;i<req.files.length;i++){
-    let sql = "UPDATE `yelp`.`rest_details` SET `path"+(i+1)+"` = "+mysql.escape(req.files[i].filename)+" WHERE (`rest_id` = "+req.body.rest_id+");"
-    
-    console.log("Query = "+sql)
-    con.query(sql, (err, result) => {
-      if (err){
-        throw err;
-        res.status(400,{
-          'Content-Type' : 'text/value'
-        });
-        res.end("Error occured")
-      }
+  upload1(req, res, err => {
+    if(err){
+      throw err;
+    }
 
-      if(i == 3){
-        if(result.length>0){
-          console.log("UPLOADED SUCCESSFULLY")
-          res.status(202,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("UPLOADED")
-        }
-        else{
-          res.status(205,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("Some error occured")
-        }
-      }      
+    kafka.make_request('upload_rest_images', {path1:req.files[0].filename, path2:req.files[1].filename, path3:req.files[2].filename, path4:req.files[3].filename, rest_id:req.body.rest_id}, function(err,results){
+      console.log('in result');
+      console.log(JSON.stringify(results));
+      console.log("Code : ",results.code)
+      console.log("Message : ",results.message)
+      if (err){
+        console.log("Inside err");
+        res.json({
+          status:"error",
+          msg:"System Error, Try Again."
+        })
+      }else{
+        res.status(results.code,{
+          'Content-Type' : 'application/json'
+        });
+        res.end(results.message);
+      }
     });
-  }
+  })
 }
 
 const storage2 = multer.diskStorage({
@@ -127,34 +111,23 @@ exports.uploadDishImage = (req,res) => {
     if(err){
       throw err;
     }          
-    let sql = "UPDATE `yelp`.`dish_details` SET `dish_path` = "+mysql.escape(req.file.filename)+" WHERE (`dish_id` = "+req.body.dish_id+");"
-    
-      con.query(sql, function (err, result) {
-        if (err){
-          throw err;
-          res.status(400,{
-            'Content-Type' : 'text/value'
-          });
-          res.end("Error occured")
-        }
-        if(result.length>0){
-          console.log("UPLOADED SUCCESSFULLY")
-          res.status(202,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("UPLOADED")
-        }
-        else{
-          res.status(205,{
-            'Content-Type' : 'application/json'
-          });
-          res.end("Some error occured")
-        }
-      });
-    
-    
-    if(!err){
-      return res.sendStatus(200).end();
-    }
+    kafka.make_request('upload_dish_image', {path:req.file.filename, dish_id:req.body.dish_id}, function(err,results){
+      console.log('in result');
+      console.log(JSON.stringify(results));
+      console.log("Code : ",results.code)
+      console.log("Message : ",results.message)
+      if (err){
+        console.log("Inside err");
+        res.json({
+            status:"error",
+            msg:"System Error, Try Again."
+        })
+      }else{
+        res.status(results.code,{
+          'Content-Type' : 'application/json'
+        });
+        res.end(results.message);
+      }
+    });
   })
 }
