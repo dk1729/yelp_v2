@@ -26,7 +26,7 @@ class InternalHeader extends Component {
 
   onSubmit = formValues => {
     this.props.setSearchTerms(formValues.searchTerm, formValues.searchLoc);
-    this.props.applyFilters(formValues);    
+    this.props.applyFilters(formValues);
   }
 
   render() {
@@ -47,7 +47,8 @@ class InternalHeader extends Component {
             <div>
               <Grid.Row>
                 <Grid.Column style={{marginTop:-15,marginLeft:15}}><Link to="/restaurants" style={{color:"black"}}>Restaurants</Link></Grid.Column>
-              <Grid.Column style={{marginTop:-15, marginLeft:20}}><Link to="/showEvents" style={{color:"black"}}>Events</Link></Grid.Column>
+                <Grid.Column style={{marginTop:-15, marginLeft:20}}><Link to="/showEvents" style={{color:"black"}}>Events</Link></Grid.Column>
+                <Grid.Column style={{marginTop:-15, marginLeft:20}}><Link to="/showUsers" style={{color:"black"}}>Users</Link></Grid.Column>
               </Grid.Row>
             </div>
           </Grid.Column>

@@ -190,6 +190,66 @@ exports.getRestaurants = (req,res) => {
   });
 }
 
+exports.getUsers = (req,res) => {
+  console.log("Please get the users")
+  kafka.make_request('get_users', req.params, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
+      })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
+      });
+      console.log("Type = "+typeof(results.message))
+      if(typeof(results.message) === "object"){
+        console.log("Stringify")
+        res.end(JSON.stringify(results.message));
+      }
+      else{
+        console.log("No strngify")
+        res.end(results.message);
+      }      
+    }
+  });
+}
+
+exports.getChats = (req,res) => {
+  console.log("Please get the chats")
+  kafka.make_request('get_chats', req.params, function(err,results){
+    console.log('in result');
+    console.log(JSON.stringify(results));
+    console.log("Code : ",results.code)
+    console.log("Message : ",results.message)
+    if (err){
+      console.log("Inside err");
+      res.json({
+        status:"error",
+        msg:"System Error, Try Again."
+      })
+    }else{
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
+      });
+      console.log("Type = "+typeof(results.message))
+      if(typeof(results.message) === "object"){
+        console.log("Stringify")
+        res.end(JSON.stringify(results.message));
+      }
+      else{
+        console.log("No strngify")
+        res.end(results.message);
+      }      
+    }
+  });
+}
+
 exports.getRestCoords = (req,res) => {
   let q1 = "SELECT latitude, longitude, rest_name, rest_id from  `yelp`.`rest_details`"
   con.query(q1, function (err2, results) {

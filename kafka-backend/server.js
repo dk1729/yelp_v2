@@ -30,6 +30,10 @@ var SearchEventsService = require('./services/SearchEventsService');
 var AddUserPhotoService = require('./services/AddUserPhotoService');
 var AddRestPhotosService = require('./services/AddRestPhotosService');
 var AddDishImageService = require('./services/AddDishImageService');
+var GetUsersService = require('./services/GetUsersService');
+var SendMessageService = require('./services/SendMessageService');
+var GetChatsService = require('./services/GetChatsService');
+
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -91,3 +95,6 @@ handleTopicRequest("search_events", SearchEventsService);
 handleTopicRequest("upload_user_image", AddUserPhotoService);
 handleTopicRequest("upload_rest_images", AddRestPhotosService);
 handleTopicRequest("upload_dish_image", AddDishImageService);
+handleTopicRequest("get_users", GetUsersService);
+handleTopicRequest("send_message", SendMessageService);
+handleTopicRequest("get_chats", GetChatsService);

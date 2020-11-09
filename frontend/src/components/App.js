@@ -24,6 +24,9 @@ import ShowReviews from './Reviews/ShowReviews';
 import ShowPastReviews from './Reviews/ShowPastReviews';
 import RestEvents from './Events/RestEvents';
 import ShowEvents from './Events/ShowEvents';
+import ShowUsers from './UserPages/ShowUsers';
+import Chat from './Chats/Chat';
+import ChatUser from './Chats/ChatUser';
 
 class App extends React.Component{
   render(){
@@ -52,6 +55,9 @@ class App extends React.Component{
           <Route path="/restEvents" component={RestEvents}/>
           <Route path="/showEvents" component={ShowEvents}/>
           <Route path="/addrestphotos" component={addRestPhotos}/>
+          <Route path="/showUsers" component={ShowUsers}/>
+          <Route path="/chat" component={Chat}/>
+          <Route path="/chatuser" component={ChatUser}/>
         </div>
       </BrowserRouter>
     );

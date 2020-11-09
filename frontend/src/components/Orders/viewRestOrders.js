@@ -129,6 +129,7 @@ class viewRestOrders extends Component {
                     {var3}
                     {var4}
                     <Col><button className="ui button"  style={{backgroundColor:"#d32323", color:"white"}}value="cancelled" onClick={this.handleClick} id={order.order_id}>Cancelled</button></Col>
+                    <Col><Link to="/chat"><button className="ui button"  style={{backgroundColor:"#d32323", color:"white"}}>Chat</button></Link></Col>
                   </Row>
               </Card.Text>
             </Card.Body>
@@ -173,6 +174,7 @@ class viewRestOrders extends Component {
                     {var3}
                     {var4}
                     <Col><button className="ui button"  style={{backgroundColor:"#d32323", color:"white"}}value="cancelled" onClick={this.handleClick} id={order.order_id}>Cancelled</button></Col>
+                    <Col><Link to="/chat"><button className="ui button"  style={{backgroundColor:"#d32323", color:"white"}}>Chat</button></Link></Col>
                   </Row>
               </Card.Text>
             </Card.Body>

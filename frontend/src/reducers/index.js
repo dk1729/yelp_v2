@@ -10,6 +10,7 @@ import fetchRestData from './fetchRestData';
 import restAuth from './restAuthReducer';
 import fetchDishData from './fetchDishData';
 import fetchRestaurants from './fetchRestaurants';
+import fetchUsers from './fetchUsers';
 import fetchCart from './fetchCart';
 import fetchOrderData from './fetchOrderData';
 import fetchReviews from './fetchReviews';
@@ -19,6 +20,7 @@ import fetchRestEvents from './fetchRestEvents';
 import fetchRestCoords from './fetchRestCoords';
 import setSearchTerms from './setSearchTerms';
 import filtered_restaurants from './applyFilters';
+import fetchMessages from './fetchMessages';
 
 const rootReducer = combineReducers({
   form:reducer,
@@ -40,7 +42,9 @@ const rootReducer = combineReducers({
   restEvents:fetchRestEvents,
   restCoords:fetchRestCoords,
   searchTerms:setSearchTerms,
-  filtered_restaurants
+  filtered_restaurants,
+  users:fetchUsers,
+  chats:fetchMessages
 })
 
 export default rootReducer;

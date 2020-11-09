@@ -36,6 +36,9 @@ class InternalRestHeader extends Component {
               <Grid.Column>
                 <div style={{marginTop:30, marginLeft:20}}><Link to="/restprofile"><i style={{color:"black"}} class="user icon"></i></Link></div>
               </Grid.Column>
+              <Grid.Column>
+                <div style={{marginTop:30, marginLeft:20}}><Link to="/messages"><i style={{color:"black"}} class="rocketchat icon"></i></Link></div>
+              </Grid.Column>
             </Grid.Row>                                            
           </Grid.Column>
           <Grid.Column>          

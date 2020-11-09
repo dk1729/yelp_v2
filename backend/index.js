@@ -42,6 +42,7 @@ var rest_controllers = require('./controllers/rest_controllers');
 var signup_controllers = require('./controllers/signup_controllers');
 var review_controllers = require('./controllers/review_controllers');
 var update_controllers = require('./controllers/update_controllers');
+var chat_controllers = require('./controllers/chat_controllers');
 //post paths
 app.post("/upload", image_controller.uploadUserImage)
 app.post("/uploadRestImages", image_controller.restImagesUpload)
@@ -63,6 +64,7 @@ app.post("/filter_order_status", order_controllers.filter_order_status)
 app.post('/submitReview', review_controllers.submitReview);
 app.post("/addEvent", event_controllers.addEvent);
 app.post("/registerForEvent", event_controllers.registerForEvent);
+app.post("/sendmessage", chat_controllers.sendMessage);
 //get paths
 app.get("/searchEvents/:term", get_data_controllers.searchEvents)
 app.get("/getEvents", get_data_controllers.getEvents)
@@ -75,6 +77,8 @@ app.get("/getOrders", get_data_controllers.getOrders)
 app.get("/getCart/:user_id", get_data_controllers.getCart)
 app.get('/getReviews', get_data_controllers.getReviews)
 app.get("/getRestaurants", get_data_controllers.getRestaurants)
+app.get("/getUsers/:user_id", get_data_controllers.getUsers)
+app.get("/getChats/:chat_id", get_data_controllers.getChats)
 //more config
 app.listen(3001);
 console.log("Server Listening on port 3001");

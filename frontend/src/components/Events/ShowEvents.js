@@ -4,7 +4,7 @@ import {fetchEvents, fetchRegisteredEvents} from '../../actions';
 import {connect} from 'react-redux';
 import {Form, Button, Card, Input } from 'semantic-ui-react';
 import axios from 'axios';
-import {Row,Col, Toast} from 'react-bootstrap';
+import {Row, Col, Toast} from 'react-bootstrap';
 import RegisteredEvents from './RegisteredEvents';
 import { baseURL } from '../URLConfig';
 

@@ -6,6 +6,9 @@ import {fetchOrderData} from '../../actions';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {baseURL} from '../URLConfig';
+import {Button} from 'semantic-ui-react';
+import { Link } from 'react-router-dom'
+
 
 class OrderHistory extends Component {
 
@@ -70,7 +73,8 @@ class OrderHistory extends Component {
                 <Row><Col>{order.mode}</Col></Row>
                 <Row><Col>Total: {order.total}</Col></Row>
                 <Row><Col>Status: {order.status}</Col></Row>
-                {item_details}                  
+                {item_details}
+                <Row><Col><Link to="/chatuser"><Button>Chat</Button></Link></Col></Row>
               </Card.Text>
             </Card.Body>
           </Card>
@@ -94,7 +98,8 @@ class OrderHistory extends Component {
                 <Row><Col>{order.mode}</Col></Row>
                 <Row><Col>Total: {order.total}</Col></Row>
                 <Row><Col>Status: {order.status}</Col></Row>
-                {item_details}                  
+                {item_details} 
+                <Row><Col><Link to="/chatuser"><Button>Chat</Button></Link></Col></Row>
               </Card.Text>
             </Card.Body>
           </Card>

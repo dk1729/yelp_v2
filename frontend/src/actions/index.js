@@ -85,6 +85,15 @@ export const setSearchTerms = (term, location) => {
   }
 }
 
+export const setMessageTerm = (term, location) => {
+  console.log("Gonna find "+term+" and "+location)
+  return{
+    type:'SET_MESSAGE_TERM',
+    term,
+    location
+  }
+}
+
 export function fetchUserData(id) {
   
   return async (dispatch)=>{
@@ -92,6 +101,17 @@ export function fetchUserData(id) {
     const response = await Axios.get(`${baseURL}/getData/`+id)
     dispatch({
       type:'FETCH_DATA',
+      payload:response.data
+    })
+  }
+}
+
+export function fetchMessages(chat_id) {
+  return async (dispatch) => {
+    Axios.defaults.withCredentials = true;
+    const response = await Axios.get(`${baseURL}/getChats/`+chat_id)
+    dispatch({
+      type:'FETCH_CHATS',
       payload:response.data
     })
   }
@@ -126,6 +146,19 @@ export function fetchRestaurants() {
     const response = await Axios.get(`${baseURL}/getRestaurants/`)
     dispatch({
       type:'FETCH_RESTAURANTS',
+      payload:response.data
+    })
+  }
+}
+
+export function fetchUsers(user_id){
+  return async (dispatch)=>{
+    Axios.defaults.withCredentials = true;
+    const response = await Axios.get(`${baseURL}/getUsers/`+user_id)
+    console.log("response = ")
+    console.log(response.data)
+    dispatch({
+      type:'FETCH_USERS',
       payload:response.data
     })
   }

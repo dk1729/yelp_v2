@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import InternalRestHeader from '../Headers/InternalRestHeader';
 import {Row,Col, Card} from 'react-bootstrap';
 import {baseURL} from '../URLConfig';
+import { Button } from 'semantic-ui-react';
 export default class ExternalUserProfile extends Component {  
   render() {
     let redirectVar = null;
@@ -30,7 +31,6 @@ export default class ExternalUserProfile extends Component {
           <Col>
             <div style={{marginLeft:100, marginTop:40, border:"1px solid black",width:"220px",height:"220px"}}>
               <img alt="Profile Photo" src={`${baseURL}/${this.props.location.state.user_details.path}`} style={{width:"220px",height:"220px"}}></img>
-              image goes here
             </div>
           </Col>
           <Col>
@@ -41,7 +41,8 @@ export default class ExternalUserProfile extends Component {
               <h5>{this.props.location.state.user_details.city?this.props.location.state.user_details.city:"Don't know"}</h5>
             </div>
           </Col>
-          <Col>            
+          <Col>
+            <Button style={{marginTop:100, background:"#d32323", color:"white"}}>Message</Button>           
           </Col>
         </Row>
         <Row>
