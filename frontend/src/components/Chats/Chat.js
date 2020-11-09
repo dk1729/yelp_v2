@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import InternalRestHeader from '../Headers/InternalRestHeader'
-import {Button} from 'semantic-ui-react';
+import {Button, Label} from 'semantic-ui-react';
 import {Field, Form, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {fetchMessages} from '../../actions';
+
 
 class Chat extends Component {
 
@@ -34,17 +35,22 @@ class Chat extends Component {
 
     if(this.props.chats.chats.length !== undefined){
       chats = this.props.chats.chats.map(chat => {
+        console.log(chat)
         if(chat.side === "rest"){
           return (
-            <div style={{textAlign:"left", width:"max-content", margin:"0 0", padding:"0 0", background:"#d32323", color:"white"}}>
-              {chat.messageTerm}
+            <div style={{textAlign:"left"}}>
+              <Label style={{color:"white", background:"#d32323", marginTop:"2rem"}}>
+                {chat.messageTerm}
+              </Label>
             </div>
           )
         }
         else{
           return (
-            <div style={{textAlign:"right", background:"gray", color:"black"}}>
-              {chat.messageTerm}
+            <div style={{textAlign:"right", marginTop:"2rem"}}>
+              <Label>
+                {chat.messageTerm}
+              </Label>
             </div>
           )
         }
@@ -53,11 +59,15 @@ class Chat extends Component {
     return (
       <div>
         <InternalRestHeader/>
+          <div>
           <Form className="ui form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
               <Field  component={this.renderInput} name="messageTerm" placeholder="Enter Message"/>
               <Button style={{background:"#d32323", color:"white", marginTop:30, marginLeft:30}} onClick={this.onSubmit}>Send</Button>
-          </Form>          
-          {chats}
+          </Form>
+          </div>
+          <div style={{marginTop:"5rem"}}>
+            {chats}
+          </div>          
       </div>
     )
   }

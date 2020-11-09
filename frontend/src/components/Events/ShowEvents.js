@@ -7,9 +7,10 @@ import axios from 'axios';
 import {Row, Col, Toast} from 'react-bootstrap';
 import RegisteredEvents from './RegisteredEvents';
 import { baseURL } from '../URLConfig';
+import { Pagination } from 'semantic-ui-react'
 
 class ShowEvents extends Component {
-  state = {searchTerm:"", cards:[], modalShow:false, message:"", show:false}
+  state = {searchTerm:"", cards:[], modalShow:false, message:"", show:false, current:[], displaypage:[]}
 
   handleModal = event => {
     event.preventDefault();
@@ -21,6 +22,20 @@ class ShowEvents extends Component {
     this.props.fetchEvents();
   }
 
+  componentWillReceiveProps(){
+    setTimeout(()=>{
+      console.log("Props = ")
+      console.log(this.props.events)
+      var pages = Math.ceil(this.props.events.events.length / 2)
+      
+      var joined = []
+      for(var j=1;j<=pages;j++){
+        joined.push(j)        
+      }
+      this.setState({displaypage:joined, cards:this.props.events.events, current:this.props.events.events.slice(0,2)})
+    },0)
+  }
+
   handleChange = event => {
     console.log(event.target.value);
     this.setState({searchTerm:event.target.value})
@@ -30,6 +45,20 @@ class ShowEvents extends Component {
     if(this.props.events.events.length!==undefined){
       this.setState({cards:this.props.events.events.reverse()})
     }
+  }
+
+  selectPage = e => {
+    console.log(e.target.value+" clicked")
+    console.log("Array = ")
+    console.log(this.state.cards)
+    console.log("New Array = ")    
+    var startIndex;
+    var endIndex;
+    startIndex = (e.target.value - 1)*2;
+    endIndex = e.target.value*2; 
+
+    console.log(this.state.cards.slice(startIndex, endIndex))
+    this.setState({current: this.state.cards.slice(startIndex, endIndex)})
   }
 
   handleSubmit = event => {
@@ -54,6 +83,7 @@ class ShowEvents extends Component {
     }    
   }
 
+  
   register = (user_id, event_id) => {
     console.log("User id = "+user_id)
     console.log("Event id = "+event_id)
@@ -85,12 +115,12 @@ class ShowEvents extends Component {
           },1000)
         });
   }
-  render() {
+  render() {    
     let event_cards = null;
     console.log("registered events")
-    console.log(this.state.re)
-    if(this.state.cards.length>0){
-      event_cards = this.state.cards.map(event => {
+    console.log(this.state.displaypage)
+    if(this.state.current.length>0){
+      event_cards = this.state.current.map(event => {
         return (
           <Card className="shadow-sm p-3 mb-5 rounded">
             <Card.Content>
@@ -118,36 +148,41 @@ class ShowEvents extends Component {
         )        
       })
     }
-    else if(this.props.events.events.length!==undefined){
-      event_cards = this.props.events.events.map(event => {
-        return (
-          <Card className="shadow-sm p-3 mb-5 rounded">
-            <Card.Content>
-              <Card.Header>{event.event_name}</Card.Header>
-              <Card.Meta>{event.event_hash}</Card.Meta>
-              <Card.Description>
-                {event.event_description}
-              </Card.Description>
-            </Card.Content>
-            <Card.Content>
-              Event by: {event.rest_name}
-            </Card.Content>
-            <Card.Content>
-              Event Date: {event.event_date.substring(0,10)}
-            </Card.Content>
-            <Card.Content>
-              {event.event_location}
-            </Card.Content>
-            <Card.Content extra>
-                <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event._id)}>
-                  Register
-                </Button>
-            </Card.Content>
-          </Card>
-        )        
-      })
-    }
-    return (      
+    // else if(this.props.events.events.length!==undefined){
+    //   event_cards = this.props.events.events.map(event => {
+    //     return (
+    //       <Card className="shadow-sm p-3 mb-5 rounded">
+    //         <Card.Content>
+    //           <Card.Header>{event.event_name}</Card.Header>
+    //           <Card.Meta>{event.event_hash}</Card.Meta>
+    //           <Card.Description>
+    //             {event.event_description}
+    //           </Card.Description>
+    //         </Card.Content>
+    //         <Card.Content>
+    //           Event by: {event.rest_name}
+    //         </Card.Content>
+    //         <Card.Content>
+    //           Event Date: {event.event_date.substring(0,10)}
+    //         </Card.Content>
+    //         <Card.Content>
+    //           {event.event_location}
+    //         </Card.Content>
+    //         <Card.Content extra>
+    //             <Button basic color='green' onClick={() => this.register(window.localStorage.getItem('id'), event._id)}>
+    //               Register
+    //             </Button>
+    //         </Card.Content>
+    //       </Card>
+    //     )        
+    //   })
+    // }
+    let p = this.state.displaypage.map(i => {
+      return (
+        <Button  onClick={this.selectPage} value={i}>{i}</Button>
+      )
+    }) 
+    return (
       <div>
         <InternalHeader/>
         <Row style={{marginTop:20}}>
@@ -179,6 +214,11 @@ class ShowEvents extends Component {
               {event_cards}  
             </Card.Group>
           </Col>
+        </Row>
+        <Row style={{marginLeft:240}}>
+          <div>
+            {p}
+          </div>
         </Row>
       </div>
     )

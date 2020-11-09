@@ -14,8 +14,8 @@ import {baseURL} from '../URLConfig';
 
 class biz extends Component {
   
-  state = {modalShow:false, message:"", show:false};
-
+  state = {modalShow:false, cards : [], message:"", show:false, current:[], displaypage:[]};
+  
   componentDidMount(){    
     this.props.fetchDishData(this.props.location.state.restaurant._id);
   }
@@ -23,6 +23,34 @@ class biz extends Component {
   handleModal = event => {
     event.preventDefault();
     this.setState({modalShow:true})
+  }
+
+  selectPage = e => {
+    console.log(e.target.value+" clicked")
+    console.log("Array = ")
+    console.log(this.state.cards)
+    console.log("New Array = ")    
+    var startIndex;
+    var endIndex;
+    startIndex = (e.target.value - 1)*5;
+    endIndex = e.target.value*5; 
+
+    console.log(this.state.cards.slice(startIndex, endIndex))
+    this.setState({current: this.state.cards.slice(startIndex, endIndex)})
+  }
+
+  componentWillReceiveProps(){
+    setTimeout(()=>{
+      console.log("Props = ")
+      console.log(this.props.events)
+      var pages = Math.ceil(this.props.dishes.dishes.length / 5)
+      
+      var joined = []
+      for(var j=1;j<=pages;j++){
+        joined.push(j)        
+      }
+      this.setState({displaypage:joined, cards:this.props.dishes.dishes, current:this.props.dishes.dishes.slice(0,5)})
+    },0)
   }
 
   handleClick = (dish_id, dish_path) => {
@@ -67,8 +95,8 @@ class biz extends Component {
     console.log(this.props.location.state.restaurant)
     let dishInfo = null;
     console.log("Dishes: "+JSON.stringify(this.props.dishes.dishes))
-    if(this.props.dishes.dishes.length !== undefined){      
-      dishInfo = this.props.dishes.dishes.map(dish => {
+    if(this.state.current.length>0){      
+      dishInfo = this.state.current.map(dish => {
         return (          
           <Card bg="white" className="shadow p-3 mb-5 rounded" style={{width:"800px",marginLeft:50, height:"250px"}}>
             <Card.Body>
@@ -122,7 +150,12 @@ class biz extends Component {
         </Table.Row>
       )
     })
-    console.log(this.props.location.state.restaurant)
+    let p = this.state.displaypage.map(i => {
+      return (
+        <Button onClick={this.selectPage} value={i}>{i}</Button>
+      )
+    }) 
+
     return (      
       <div>
         {redirectVar}
@@ -181,6 +214,9 @@ class biz extends Component {
                 </Col>
               </Row>
             </Col>
+          </Row>
+          <Row>
+            <div style={{marginLeft:70}}>{p}</div>
           </Row>
         </div>
       </div>
