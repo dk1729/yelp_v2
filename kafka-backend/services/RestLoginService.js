@@ -1,5 +1,7 @@
 var {rest_details} = require('../Models/RestDetails');
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken')
+var passport = require('passport')
 
 function handle_request(msg, callback){   
   console.log("Inside rest login kafka backend");
@@ -20,7 +22,14 @@ function handle_request(msg, callback){
         if (isMatch && !err) {
           b.email = result.email;
           b.rest_id = result._id;
-          callback(null,{code:200,message:b})
+          var token={
+            email: msg.username,
+            user: "user"
+          }
+          var signed_token = jwt.sign(token, config.secret, {
+            expiresIn: 86400 // in seconds
+          });
+          callback(null,{code:200,message:{b, signed_token}})
         } else {
           callback(null,{code:403,message:"Credentials don't match"})
         }
